@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        body {
+            text-align: center;
+            /* Centraliza todo o conteúdo */
+        }
+
+        .canvas-container {
+            display: inline-block;
+            /* Adicionado para exibir lado a lado */
+        }
+
+        .canvas {
+            position: relative;
+            width: 300px;
+            height: 300px;
+            border: 1px solid #000;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .square {
+            position: absolute;
+            width: 100px;
+            height: 100px;
+            background-color: red;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .coordinate-text {
+            font-size: 12px;
+            color: black;
+            position: absolute;
+        }
+
+        .coordinate-text-x {
+            top: -20px;
+            /* Ajuste para posição acima do quadrado */
+        }
+
+        .coordinate-text-y {
+            left: -25px;
+            /* Ajuste para posição à esquerda do quadrado */
+        }
+
+        #canvas1 {
+            background-color: #f0f0f0;
+        }
+
+        #canvas2 {
+            background-color: #e0e0e0;
+        }
+    </style>
+    <title>Plano Cartesiano</title>
+</head>
+
+<body>
+    <h2>Plano Cartesiano</h2>
+    <label for="coordX">Coordenada X:</label>
+    <input type="number" id="coordX" required>
+    <label for="coordY">Coordenada Y:</label>
+    <input type="number" id="coordY" required>
+
+    <br>
+
+    <label for="plano1">Plano 1</label>
+    <input type="radio" id="plano1" name="plano" value="canvas1" checked>
+    <label for="plano2">Plano 2</label>
+    <input type="radio" id="plano2" name="plano" value="canvas2"><br>
+    <button onclick="desenharQuadrado()">Desenhar Quadrado</button>
+
+    <br>
+
+    <div class="canvas-container">
+        <div id="canvas1" class="canvas"></div>
+        <div id="canvas2" class="canvas"></div>
+    </div>
+
+    <script>
+        function desenharQuadrado() {
+            var x = parseInt(document.getElementById("coordX").value);
+            var y = parseInt(document.getElementById("coordY").value);
+
+            var canvasId = document.querySelector('input[name="plano"]:checked').value;
+            var canvas = document.getElementById(canvasId);
+
+            // Remover quadrado existente, se houver
+            var quadradoExistente = canvas.querySelector(".square");
+            if (quadradoExistente) {
+                canvas.removeChild(quadradoExistente);
+            }
+
+            // Adicionar novo quadrado
+            var quadrado = document.createElement("div");
+            quadrado.className = "square";
+            quadrado.style.left = x + "px"; 
+            quadrado.style.top = y + "px";
+
+            var textoCoordenadaX = document.createElement("div");
+            textoCoordenadaX.className = "coordinate-text coordinate-text-x";
+            textoCoordenadaX.innerHTML = x;
+            quadrado.appendChild(textoCoordenadaX);
+
+            var textoCoordenadaY = document.createElement("div");
+            textoCoordenadaY.className = "coordinate-text coordinate-text-y";
+            textoCoordenadaY.innerHTML = y;
+            quadrado.appendChild(textoCoordenadaY);
+
+            canvas.appendChild(quadrado);
+        }
+    </script>
+</body>
+
+</html>
